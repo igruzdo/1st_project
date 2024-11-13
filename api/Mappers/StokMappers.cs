@@ -22,5 +22,18 @@ namespace api.Mappers
                 MarketCap = stokModel.MarketCap,
             };
         }
+
+        public static Stok ToStokFromCreateDto(this CreateStokRequestDto stokDto)
+        {
+             return new Stok
+             {
+                Symbol = stokDto.Symbol,
+                CompanyName = stokDto.CompanyName,
+                Purchase = stokDto.Purchase,
+                LastDiv = stokDto.LastDiv,
+                Industry = stokDto.Industry,
+                MarketCap = stokDto.MarketCap,
+             }
+        }
     }
 }
