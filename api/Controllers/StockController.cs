@@ -39,13 +39,50 @@ namespace api.Controllers
             return Ok(stock.ToStokDto());
         }
 
-         [HttpPost]
-         public IActionResult Create([FromBody] CreateStokRequestDto stokDto)
-         {
+        [HttpPost]
+        public IActionResult Create([FromBody] CreateStokRequestDto stokDto)
+        {
             var stokModel = stokDto.ToStokFromCreateDto();
             _context.Add(stokModel);
             _context.SaveChanges();
             return CreatedAtAction(nameof(GetById), new { id = stokModel.Id }, stokModel.ToStokDto()); 
-         }
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public IActionResult Update([FromRoute] int id, [FromBody] UpdateStokRequestDto updateDto)
+        {
+            var stokModel = _context.Stocks.FirstOrDefault(s => s.Id == id);
+            if(stokModel == null)
+            {
+                return NotFound();
+            }
+
+            stokModel.Symbol = updateDto.Symbol;
+            stokModel.CompanyName = updateDto.CompanyName;
+            stokModel.Purchase = updateDto.Purchase;
+            stokModel.Industry = updateDto.Industry;
+            stokModel.MarketCap = updateDto.MarketCap;
+            stokModel.LastDiv = updateDto.LastDiv;
+            
+            _context.SaveChanges();
+
+            return Ok(stokModel.ToStokDto());
+        }
+
+        [HttpDelete]
+        [Route("id")]
+        public IActionResult Delete([FromRoute] int id)
+        {
+            var stokModel = _context.Stocks.FirstOrDefault(s => s.Id == id);
+            if(stokModel == null)
+            {
+                return NotFound();
+            }
+            
+            _context.Stocks.Remove(stokModel);
+
+            return NoContent();
+        }
     }
 } 

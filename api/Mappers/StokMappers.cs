@@ -33,7 +33,7 @@ namespace api.Mappers
                 LastDiv = stokDto.LastDiv,
                 Industry = stokDto.Industry,
                 MarketCap = stokDto.MarketCap,
-             }
+             };
         }
     }
 }
