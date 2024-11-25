@@ -39,7 +39,7 @@ namespace api.Migrations
                     Title = table.Column<string>(type: "text", nullable: false),
                     Content = table.Column<string>(type: "text", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    StokId = table.Column<int>(type: "integer", nullable: true),
+                    StockId = table.Column<int>(type: "integer", nullable: true),
                     Stockid = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>

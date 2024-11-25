@@ -39,7 +39,7 @@ namespace api.Migrations
                     b.Property<int?>("Stockid")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("StokId")
+                    b.Property<int?>("StockId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Title")
