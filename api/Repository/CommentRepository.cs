@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Interfaces;
 using api.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Repository
@@ -18,6 +19,11 @@ namespace api.Repository
         public async Task<List<Comment>> GetAllAsync()
         {
             return await _context.Comments.ToListAsync();
+        }
+
+        public async Task<Comment?> GetByIdAsync(int id)
+        {
+            return await _context.Comments.FindAsync(id);
         }
     }
 }
