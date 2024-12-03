@@ -9,8 +9,8 @@ namespace api.Mappers
 {
     public static class CommentMapper
     {
-         public static CommentDto ToCommentDto(this Comment commentModel)
-         {
+        public static CommentDto ToCommentDto(this Comment commentModel)
+        {
             return new CommentDto
             {
                 Id = commentModel.Id,
@@ -19,6 +19,16 @@ namespace api.Mappers
                 CreatedOn = commentModel.CreatedOn,
                 StockId = commentModel.StockId,
             };
-         }
+        }
+
+        public static Comment ToCommentFromCreate(this CreateCommentDto createCommentDto, int stockId)
+        {
+            return new Comment
+            {
+                Title = createCommentDto.Title,
+                Content = createCommentDto.Content,
+                StockId = stockId,
+            };
+        }  
      }
 }
