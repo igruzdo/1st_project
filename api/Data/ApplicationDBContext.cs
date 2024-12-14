@@ -10,10 +10,24 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>
     // Определите DbSet для каждой сущности
     public DbSet<Stock> Stocks { get; set; }  
     public DbSet<Comment> Comments { get; set; }
-
+    public DbSet<Portfolio> portfolios{ get; set; }
+ 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Portfolio>(x => x.HasKey(p => new {p.AppUserId, p.StockId}));
+
+        modelBuilder.Entity<Portfolio>()
+            .HasOne(x => x.AppUser)
+            .WithMany(u => u.Portfolios)
+            .HasForeignKey(u => u.AppUserId);
+
+        modelBuilder.Entity<Portfolio>()
+            .HasOne(x => x.Stock)
+            .WithMany(u => u.Portfolios)
+            .HasForeignKey(u => u.StockId);
+
         List<IdentityRole> identityRoles = new List<IdentityRole>
         {
             new IdentityRole
