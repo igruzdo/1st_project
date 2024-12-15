@@ -33,8 +33,8 @@ namespace api.Controllers
 
         [HttpPost]
         [Authorize]
-         public async Task<IActionResult> AddPortfolio(string symbol)
-         {
+        public async Task<IActionResult> AddPortfolio(string symbol)
+        {
             var userName = User.GetUserName();
             var appUser = await _userManager.FindByNameAsync(userName);
             var stock = await _stockRepository.GetByIdSymbolAsync(symbol);
@@ -56,6 +56,28 @@ namespace api.Controllers
             await _portfolioRepository.CreateAsync(portfolioModel);
 
             return Created(); 
-         }
+        }
+
+        [HttpDelete]
+        [Authorize]
+        public async Task<ActionResult> DeletePortfolio(string symbol)
+        {
+            var userName = User.GetUserName();
+            var appUser = await _userManager.FindByNameAsync(userName);
+            var portfolio = await _portfolioRepository.GetUserPortfolioAsync(appUser);
+
+            var filteredPortfolio = portfolio.Where(e => e.Symbol.ToLower() == symbol.ToLower()).ToList();
+
+            if(filteredPortfolio.Count() == 1)
+            {
+                await _portfolioRepository.DeletePortfolio(appUser,  symbol );
+            }
+            else
+            {
+                return BadRequest("Stock is not in your portfolio");
+            }
+
+            return Ok();  
+        }
     }
 }
