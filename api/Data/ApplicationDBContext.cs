@@ -10,7 +10,7 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>
     // Определите DbSet для каждой сущности
     public DbSet<Stock> Stocks { get; set; }  
     public DbSet<Comment> Comments { get; set; }
-    public DbSet<Portfolio> portfolios{ get; set; }
+    public DbSet<Portfolio> Portfolios{ get; set; }
  
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
