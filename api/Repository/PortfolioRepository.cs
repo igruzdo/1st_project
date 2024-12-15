@@ -15,6 +15,15 @@ namespace api.Repository
         {
             _applicationDbContext = applicationDbContext;
         }
+
+        public async Task<Portfolio> CreateAsync(Portfolio portfolio)
+        {
+            await _applicationDbContext.Portfolios.AddAsync(portfolio);
+            await _applicationDbContext.SaveChangesAsync();
+
+            return portfolio;
+        }
+
         public async Task<List<Stock>> GetUserPortfolioAsync(AppUser user)
         {
             return await _applicationDbContext.Portfolios.Where(p => p.AppUserId == user.Id)
